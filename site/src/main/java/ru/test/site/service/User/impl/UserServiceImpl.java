@@ -1,0 +1,37 @@
+package ru.test.site.service.User.impl;
+
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import ru.test.site.model.User;
+import ru.test.site.repository.UserRepository;
+import ru.test.site.service.User.UserService;
+
+import java.util.List;
+
+@Service
+@Primary
+public class UserServiceImpl implements UserService {
+    private final UserRepository userRepository;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public User getUserById(long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+    }
+
+    @Override
+    public void addUser(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+}
