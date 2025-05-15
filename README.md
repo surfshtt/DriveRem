@@ -1,8 +1,8 @@
-# Drive Rem
+# ScheduleNest
 
 ## Description
 
-Drive Rem is a web application for scheduling driving lessons in driving schools. It allows users to manage their schedules and receive reminders about upcoming classes.
+ScheduleNest is a web application for scheduling your tasks. It allows users to manage their schedules and receive reminders about upcoming tasks.
 
 ## Tech Stack
 
