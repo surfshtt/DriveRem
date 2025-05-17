@@ -1,7 +1,9 @@
 package ru.test.site.controllers;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.test.site.model.User;
+import ru.test.site.repository.UserRepository;
 import ru.test.site.service.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,17 +25,39 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public User getUserById(@PathVariable long id) {
         return userService.getUserById(id);
     }
 
+    @GetMapping("/username/{username}")
+    public User getUseBryUsername(@PathVariable String username) {
+        return userService.getUserByUsername(username);
+    }
+
     @PostMapping("save")
-    public String addUser(@RequestBody User user) {
-        if(user != null) {
+    public ResponseEntity<String> addUser(@RequestBody User user) {
+        if(validateUserData(user)) {
             userService.addUser(user);
-            return "User successfully added";
+            return ResponseEntity.ok("User successfully added");
         }
-        return "User data is null";
+        else {
+            return ResponseEntity.badRequest().body("User data is incorrect");
+        }
+    }
+
+
+    private boolean validateUserData(User user){
+
+        if(user == null)
+            return false;
+
+        if(userService.getUserByUsername(user.username) != null)
+            return false;
+
+        if(userService.checkTelegram(user.telegramId))
+            return false;
+
+        return true;
     }
 }

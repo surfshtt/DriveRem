@@ -47,19 +47,24 @@
         };
 
         try {
-        //     const response = await fetch(`${API_BASE_URL}/save`, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify(student)
-        //     });
-        //     showResult('Student added successfully!');
-        //     document.getElementById('addStudentForm').reset();
-        } catch (error) {
-             alert("Что то пошло не так: " + error);
-        }
+            const response = await fetch(`${API_BASE_URL}/save`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                 body: JSON.stringify(user)
+            });
 
+            if(response.ok){
+                document.getElementById('registrationForm').reset();
+            }
+            else{
+                alert("Введены не корректные данные!");
+            }
+
+        } catch (error) {
+            alert("Что то пошло не так: " + error);
+        }
     });
 
 
